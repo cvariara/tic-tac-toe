@@ -5,3 +5,29 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.container {
+  background-color: lightgray;
+  height: 100vh;
+}
+
+.game {
+  background-color: gray;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.game div {
+  border: 1px solid black;
+  font-size: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
