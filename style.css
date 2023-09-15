@@ -60,3 +60,23 @@ h1 {
 .no-r {
   border-right: none;
 }
+
+.info {
+  display: flex;
+  gap: 25px;
+  padding: 10px;
+}
+
+.restart {
+  padding: 1px 20px;
+  background-color: rgb(117, 117, 204);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.restart:hover {
+  color: white;
+  background-color: rgb(85, 85, 138);
+  transform: scale(1.02);
+}

@@ -154,6 +154,7 @@ const ScreenController = () => {
   const game = GameController();
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".game");
+  const info = document.querySelector('.info');
 
   const updateScreen = () => {
     const currentPlayer = game.getCurrentPlayer();
@@ -166,11 +167,12 @@ const ScreenController = () => {
 
   const restartGame = () => {
     game.setBoard(["", "", "", "", "", "", "", "", ""]);
-
+    restart.remove();
     ScreenController();
   };
 
   const restart = document.createElement("button");
+  restart.classList.add("restart");
   restart.textContent = "Restart Game";
   restart.addEventListener("click", restartGame);
 
@@ -185,13 +187,13 @@ const ScreenController = () => {
     if (game.checkWin(game.getCurrentPlayer())) {
       playerTurnDiv.textContent = `${game.getCurrentPlayer().name} Wins!`;
       boardDiv.removeEventListener("click", handleClick);
-      playerTurnDiv.appendChild(restart);
+      info.appendChild(restart);
     }
 
     if (game.boardIsFull()) {
       playerTurnDiv.textContent = `Tie Game!`;
       boardDiv.removeEventListener("click", handleClick);
-      playerTurnDiv.appendChild(restart);
+      info.appendChild(restart);
     }
   }
 
