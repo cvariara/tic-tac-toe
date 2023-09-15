@@ -4,12 +4,26 @@ const gameBoard = () => {
 
   const getBoard = () => board;
 
+  const setBoard = (newBoard) => {
+    for (let i = 0; i < 9; i++) {
+      board[i] = newBoard[i];
+    }
+  };
+
   const displayBoard = () => {
     const gameContainer = document.querySelector(".game");
     gameContainer.innerHTML = "";
     for (let i = 0; i < board.length; i++) {
       const boardCell = document.createElement("div");
       boardCell.classList.add("cell");
+      if (i === 2 || i === 5) {
+        boardCell.classList.add("no-r");
+      } else if (i === 6 || i === 7) {
+        boardCell.classList.add("no-b");
+      } else if (i === 8) {
+        boardCell.classList.add("no-b");
+        boardCell.classList.add("no-r");
+      }
       boardCell.dataset.cell = i;
       boardCell.textContent = board[i];
       gameContainer.appendChild(boardCell);
@@ -29,6 +43,7 @@ const gameBoard = () => {
 
   return {
     getBoard,
+    setBoard,
     displayBoard,
     fillBoardCell,
   };
@@ -40,13 +55,10 @@ const GameController = () => {
 
   const Player = (name, type) => {
     const moves = [];
-    const printString = () =>
-      console.log(`I'm ${name}, and my move is ${type}`);
     return {
       name,
       type,
       moves,
-      printString,
     };
   };
 
@@ -70,6 +82,7 @@ const GameController = () => {
   const switchTurns = () => {
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
   };
+
   const getCurrentPlayer = () => currentPlayer;
 
   const printNewRound = () => {
@@ -81,7 +94,11 @@ const GameController = () => {
     if (board.fillBoardCell(cell, getCurrentPlayer())) {
       /* winning logic */
       if (checkWin(getCurrentPlayer())) {
-        console.log(`${getCurrentPlayer().name} wins!`)
+        console.log(`${getCurrentPlayer().name} wins!`);
+        return;
+      }
+      if (boardIsFull()) {
+        console.log(`Tie game!`);
         return;
       }
 
@@ -92,6 +109,10 @@ const GameController = () => {
     }
   };
   printNewRound();
+
+  const boardIsFull = () => {
+    return board.getBoard().every((cell) => cell !== "");
+  };
 
   const checkWin = (player) => {
     const nums = player.moves.map((str) => parseInt(str));
@@ -118,34 +139,40 @@ const GameController = () => {
     }
   };
 
-  // const boardIsFull = () => {
-  //   return board.getBoard().every((cell) => cell !== "");
-  // };
-
   return {
     playRound,
     getCurrentPlayer,
-    getBoard: board.getBoard,
+    setBoard: board.setBoard,
     displayBoard: board.displayBoard,
-    checkWin
+    checkWin,
+    boardIsFull,
   };
 };
 
-const screenController = () => {
+// controls to display content on the screen
+const ScreenController = () => {
   const game = GameController();
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".game");
-  
+
   const updateScreen = () => {
     const currentPlayer = game.getCurrentPlayer();
     boardDiv.textContent = "";
-
-    const board = game.getBoard();
 
     playerTurnDiv.textContent = `${currentPlayer.name}'s turn...`;
 
     game.displayBoard();
   };
+
+  const restartGame = () => {
+    game.setBoard(["", "", "", "", "", "", "", "", ""]);
+
+    ScreenController();
+  };
+
+  const restart = document.createElement("button");
+  restart.textContent = "Restart Game";
+  restart.addEventListener("click", restartGame);
 
   function handleClick(e) {
     const selectedCell = e.target.dataset.cell;
@@ -158,6 +185,13 @@ const screenController = () => {
     if (game.checkWin(game.getCurrentPlayer())) {
       playerTurnDiv.textContent = `${game.getCurrentPlayer().name} Wins!`;
       boardDiv.removeEventListener("click", handleClick);
+      playerTurnDiv.appendChild(restart);
+    }
+
+    if (game.boardIsFull()) {
+      playerTurnDiv.textContent = `Tie Game!`;
+      boardDiv.removeEventListener("click", handleClick);
+      playerTurnDiv.appendChild(restart);
     }
   }
 
@@ -166,4 +200,4 @@ const screenController = () => {
   updateScreen();
 };
 
-screenController();
+ScreenController();

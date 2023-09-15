@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mooli&family=Roboto:wght@400;500;700;900&display=swap');
+
 *,
 *::before,
 *::after {
@@ -6,9 +9,19 @@
   box-sizing: border-box;
 }
 
-.container {
+body {
+  font-family: 'Mooli', sans-serif;
   background-color: lightgray;
-  height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 100px;
+  letter-spacing: 12px;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,22 +30,33 @@
 }
 
 .turn {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .game {
-  background-color: gray;
+  /* background-color: gray; */
   width: 40%;
+  max-width: 550px;
   height: 500px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 }
 
-.game div {
-  border: 1px solid black;
+.cell {
+  border: 2px solid black;
+  border-left: none;
+  border-top: none;
   font-size: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.no-b {
+  border-bottom: none;
+}
+
+.no-r {
+  border-right: none;
 }
