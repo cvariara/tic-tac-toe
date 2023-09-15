@@ -154,7 +154,7 @@ const ScreenController = () => {
   const game = GameController();
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".game");
-  const info = document.querySelector('.info');
+  const info = document.querySelector(".info");
 
   const updateScreen = () => {
     const currentPlayer = game.getCurrentPlayer();
@@ -188,12 +188,14 @@ const ScreenController = () => {
       playerTurnDiv.textContent = `${game.getCurrentPlayer().name} Wins!`;
       boardDiv.removeEventListener("click", handleClick);
       info.appendChild(restart);
+      return;
     }
 
     if (game.boardIsFull()) {
       playerTurnDiv.textContent = `Tie Game!`;
       boardDiv.removeEventListener("click", handleClick);
       info.appendChild(restart);
+      return;
     }
   }
 
