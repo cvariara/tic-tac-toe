@@ -21,6 +21,42 @@ h1 {
   letter-spacing: 12px;
 }
 
+.form {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+form {
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  height: 450px;
+  width: 350px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  outline: 0;
+  height: 32px;
+  border-width: 0 0 2px;
+  border-color: rgb(111, 165, 216);
+}
+
+input:hover {
+  border-color: rgb(113, 119, 201);
+  outline: 1px dotted #000
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -29,12 +65,15 @@ h1 {
   gap: 40px;
 }
 
+.container {
+  display: none;
+}
+
 .turn {
   font-size: 3rem;
 }
 
 .game {
-  /* background-color: gray; */
   width: 40%;
   max-width: 550px;
   height: 500px;
@@ -67,7 +106,8 @@ h1 {
   padding: 10px;
 }
 
-.restart {
+.restart,
+.start {
   padding: 1px 20px;
   background-color: rgb(117, 117, 204);
   border: none;
@@ -75,8 +115,14 @@ h1 {
   cursor: pointer;
 }
 
-.restart:hover {
+.restart:hover,
+.start:hover {
   color: white;
   background-color: rgb(85, 85, 138);
   transform: scale(1.02);
+}
+
+.start {
+  height: 40px;
+  width: 200px;
 }

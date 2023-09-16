@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <h1>Tic Tac Toe</h1>
-  <div class="container">
-    <div class="info">
-      <h2 class="turn"></h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>Tic Tac Toe</h1>
+    <div class="form">
+      <form action="#" method="post" id="player-form">
+        <div class="form-row">
+          <label for="player-one">Player 1's Name</label>
+          <input type="text" name="player-one" id="player-one" />
+        </div>
+        <div class="form-row">
+          <label for="player-two">Player 2's Name</label>
+          <input type="text" name="player-two" id="player-two" />
+        </div>
+        <div class="form-row">
+          <button type="submit" class="start">Start Game</button>
+        </div>
+      </form>
     </div>
-    <div class="game"></div>
-  </div>
-</body>
+    <div class="container">
+      <div class="info">
+        <h2 class="turn"></h2>
+      </div>
+      <div class="game"></div>
+    </div>
+  </body>
 </html>

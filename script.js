@@ -50,7 +50,7 @@ const gameBoard = () => {
 };
 
 // controls the flow of the game and win/lose scenarios
-const GameController = () => {
+const GameController = (playerOneName, playerTwoName) => {
   const board = gameBoard();
 
   const Player = (name, type) => {
@@ -62,8 +62,8 @@ const GameController = () => {
     };
   };
 
-  const player = Player("Player 1", "X");
-  const ai = Player("Player 2", "O");
+  const player = Player(playerOneName, "X");
+  const ai = Player(playerTwoName, "O");
 
   const players = [
     {
@@ -79,11 +79,17 @@ const GameController = () => {
   ];
 
   let currentPlayer = players.find((player) => player.type === "X");
+
   const switchTurns = () => {
     currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
   };
 
   const getCurrentPlayer = () => currentPlayer;
+
+  const getOtherPlayer = () => {
+    const otherPlayer = currentPlayer === players[0] ? players[1] : players[0];
+    return otherPlayer;
+  };
 
   const printNewRound = () => {
     board.displayBoard();
@@ -142,6 +148,7 @@ const GameController = () => {
   return {
     playRound,
     getCurrentPlayer,
+    getOtherPlayer,
     setBoard: board.setBoard,
     displayBoard: board.displayBoard,
     checkWin,
@@ -151,7 +158,13 @@ const GameController = () => {
 
 // controls to display content on the screen
 const ScreenController = () => {
-  const game = GameController();
+  let playerOneName = "";
+  let playerTwoName = "";
+  let currentPlayer = null;
+  let game = null;
+
+  const form = document.querySelector("#player-form");
+  const container = document.querySelector(".container");
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".game");
   const info = document.querySelector(".info");
@@ -161,14 +174,25 @@ const ScreenController = () => {
     boardDiv.textContent = "";
 
     playerTurnDiv.textContent = `${currentPlayer.name}'s turn...`;
+    console.log(currentPlayer.moves);
 
     game.displayBoard();
   };
 
   const restartGame = () => {
+    const otherPlayer = game.getOtherPlayer();
+
     game.setBoard(["", "", "", "", "", "", "", "", ""]);
-    restart.remove();
-    ScreenController();
+
+    currentPlayer = game.getCurrentPlayer();
+    currentPlayer.moves = [];
+
+    otherPlayer.moves = [];
+    updateScreen();
+
+    playerTurnDiv.textContent = `${currentPlayer.name}'s turn...`;
+    info.removeChild(restart);
+    boardDiv.addEventListener("click", handleClick);
   };
 
   const restart = document.createElement("button");
@@ -199,9 +223,22 @@ const ScreenController = () => {
     }
   }
 
-  boardDiv.addEventListener("click", handleClick);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  updateScreen();
+    playerOneName = document.querySelector("#player-one").value;
+    playerTwoName = document.querySelector("#player-two").value;
+
+    game = GameController(playerOneName, playerTwoName);
+    currentPlayer = game.getCurrentPlayer();
+
+    updateScreen();
+
+    boardDiv.addEventListener("click", handleClick);
+
+    form.style.display = "none";
+    container.style.display = "flex";
+  });
 };
 
 ScreenController();
